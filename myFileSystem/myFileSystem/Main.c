@@ -24,15 +24,11 @@ int main(int argc, char** argv) {
 	
 	printf("Eingabe: ");
 	while (gets(str)) {
-		//printf("Eingabe: ");
-
+		
 		const char s[2];
 		char* token;
 
 		token = strtok(str, " ");
-
-		//printf("%s", str);
-		//exit(-1);
 
 		int cnt = 0;
 		while (token != NULL) {
@@ -47,14 +43,21 @@ int main(int argc, char** argv) {
 			}
 		}
 		
+		if (cnt == 0) {
+			numberForCase = 6;
+		}
+		else {
+			if (strcmp("-help", myBefehl) == 0) { numberForCase = 0; }
+			else if (strcmp("-create", myBefehl) == 0) { numberForCase = 1; }
+			else if (strcmp("-partition", myBefehl) == 0) { numberForCase = 2; }
+			else if (strcmp("-stats", myBefehl) == 0) { numberForCase = 3; }
+			else if (strcmp("-add", myBefehl) == 0) { numberForCase = 4; }
+			else if (strcmp("-exit", myBefehl) == 0) { numberForCase = 5; }
+			else if (strcmp(" ", myBefehl) == 0) { numberForCase = 6; }
+			else { numberForCase = 7; }
+		}
 
-		if (strcmp("-help", myBefehl) == 0) {numberForCase = 0;}
-		else if (strcmp("-create", myBefehl) == 0) {numberForCase = 1;}
-		else if (strcmp("-partition", myBefehl) == 0) {numberForCase = 2;}
-		else if (strcmp("-stats", myBefehl) == 0) {numberForCase = 3;}
-		else if (strcmp("-add", myBefehl) == 0) {numberForCase = 4;}
-		else if (strcmp("-exit", myBefehl) == 0) {numberForCase = 5;}
-		else {numberForCase = 7;}
+		
 		
 		switch (numberForCase) {
 			case 0: printMenu();
