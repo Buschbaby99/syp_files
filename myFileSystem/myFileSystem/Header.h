@@ -1,6 +1,10 @@
 #pragma once
 
 
+#define MAX_PARTITONS 10
+#define MAX_NAME_LENGHT 100
+
+
 typedef struct bootsector {
 #define DEFAULT_BLOCKSIZE 4096
 #define MAX_SUB_DIRECTORIES 100
@@ -51,6 +55,10 @@ typedef struct freeBlocks {
 }freeBlocks;
 
 
+
+
+
+
 void printStats(char* fileName);
 int fileSize(char*);
 int getNumberOfBlocks(int filesize, int blocksize);
@@ -71,5 +79,7 @@ void printMyAdmin(admin a);
 void printMenu();
 void myHelp();
 void createPartition(char* myPartition);
-
-
+void ls();
+void selectPartition(char* myPartition);
+void isMyPartSelected();
+void addThisImage(char* image);
