@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define MAX_PARTITONS 10
 #define MAX_NAME_LENGHT 100
 
@@ -18,18 +17,8 @@ typedef struct direntry {
 	char filename[32];
 	int size;
 	int firstblock;
+	//int isSubOrNot;
 }direntry;
-
-typedef struct subDir {
-	char label[32];
-	int blocksize;
-	int blockcount;
-}subDir;
-
-typedef struct subDirEntrys {
-#define MAX_SUB_ENTRIES 10
-	subDir sub_entries[MAX_SUB_ENTRIES];
-}subDirEntrys;
 
 typedef struct dir {
 #define MAX_DIR_ENTRIES 64
@@ -45,7 +34,7 @@ typedef struct admin {
 	bootsector b;
 	dir rootDir;
 	fat fat;
-	subDir subDirectories;
+	//subDir subDirectories;
 }admin;
 
 
@@ -59,7 +48,6 @@ typedef struct freeBlocks {
 
 
 
-void printStats(char* fileName);
 int fileSize(char*);
 int getNumberOfBlocks(int filesize, int blocksize);
 
@@ -83,3 +71,6 @@ void ls();
 void selectPartition(char* myPartition);
 void isMyPartSelected();
 void addThisImage(char* image);
+
+void printStats();
+void del(char* myInput);

@@ -7,16 +7,15 @@
 #include "Header.h"
 
 
-
 bootsector b = { "3AKIFT", DEFAULT_BLOCKSIZE, MAX_BLOCK_COUNT };
 admin a = { 0 };
-subDir sub = { 0 };
+//subDir sub = { 0 };
 
 int numberForCase = 6;
 
 char* fileName = NULL;
 char* dirName = NULL;
-char* selectedPart = NULL;
+char selectedPart[32];
 
 //for ls
 int myPartitionCnt = 0;
@@ -24,10 +23,6 @@ char myPartArr[MAX_PARTITONS][MAX_NAME_LENGHT];
 
 
 int main(int argc, char** argv) {
-
-	
-	//myPartArr[0] = "hhsh";
-
 
 	char str[50];
 	myHelp();
@@ -40,7 +35,6 @@ int main(int argc, char** argv) {
 		
 		const char s[2];
 		char* token;
-
 		token = strtok(str, " ");
 
 		int cnt = 0;
@@ -68,11 +62,13 @@ int main(int argc, char** argv) {
 			else if (strcmp("-exit", myBefehl) == 0) { numberForCase = 5; }
 			else if (strcmp(" ", myBefehl) == 0) { numberForCase = 6; }
 			else if (strcmp("-ls", myBefehl) == 0) { numberForCase = 8; }
+			else if (strcmp("-del", myBefehl) == 0) { numberForCase = 9; }
 			else { numberForCase = 7; }
 		}
 
 		switch (numberForCase) {
 			case 0: printMenu();
+				isMyPartSelected();
 				break;
 			case 1: 
 				createPartition(myInput);
@@ -83,12 +79,14 @@ int main(int argc, char** argv) {
 				isMyPartSelected();
 				break;
 			case 3: 
-				printStats(myInput);
+				printStats();
+				printf("\n");
 				isMyPartSelected();
 				break;
 			case 4: 
-				addImage(myInput);
-				//printf("a ist drei\n");
+				addThisImage(myInput);
+				printf("\n\n");
+				isMyPartSelected();
 				break;
 			case 5: 
 				printf("Konsole wurde beendet beendet!\n");
@@ -102,100 +100,27 @@ int main(int argc, char** argv) {
 				ls();
 				isMyPartSelected();
 				break;
+			case 9:
+				del(myInput, a);
+				isMyPartSelected();
+				break;
 			default: 
 				printf("Wronge Input maybe try [-help] for info\n\n"); 
 				printf("==============================================\n");
 				isMyPartSelected();
 				break;
 		}
-	}
-	int i = 0;
-		if (strcmp("-mkdir", argv[i]) == 0) {
-			
-			//char** myPath = argv[i+1];
-			dirName = argv[i + 1];
-			
-			FILE* fd = fopen(dirName, "wb");
-			int totalSize = sizeof(subDir) + (sub.blockcount * sub.blocksize);
-
-			fwrite(&sub, 1, sizeof(subDir), fd);
-			void* pt = malloc(sub.blockcount * sub.blocksize);
-			if (!pt) return;
-			memset(pt, 0, sub.blockcount * sub.blocksize);
-			fwrite(pt, 1, sub.blockcount * sub.blocksize, fd);
-			int cursorPos = ftell(fd);
-			fclose(fd);
-		}
-		if (strcmp("-add", argv[i]) == 0) {
-
-			if (fileName == NULL) {
-				printf("\n###Error: no partition specified!");
-				exit(-1);
-			}
-
-			char* userFile = argv[i + 1];
-
-			dir* d = &(a.rootDir);
-
-			for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
-				if (strcmp(d->entries[i].filename, userFile) == 0) {
-					printf("\n###Error: [%s] exists already ... exit now", userFile);
-					exit(-1);
-				}
-			}
-
-			for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
-				if (d->entries[i].filename[0] == '\0') {
-					strcpy(&d->entries[i].filename[0], userFile);
-					int _filesize = d->entries[i].size = fileSize(userFile);
-					int bCnt = getNumberOfBlocks(d->entries[i].size, b.blocksize);
-					int _freeBlocks = getNumberOfFreeBlocks(&a);
-					printf("\nadded [%s] to partition [%s] size=[%d] #blocks=[%d] free=[%d]",
-						userFile, fileName, d->entries[i].size, bCnt, _freeBlocks);
-
-					if (bCnt <= _freeBlocks) {
-						freeBlocks fb;
-						getArrayWithFreeBlocks(&a, _filesize, &fb);
-						writeFileToPartition(&a, userFile, fileName, &fb);
-						// write used blocks to FAT
-						printf("\nblocks used: ");
-						for (int j = 0; j < fb.cnt; j++) {
-							printf("%d, ", fb.arr[j]);
-							if (j == 0) {
-								// write filename + filesize + firstblock to root dir
-								strcpy(a.rootDir.entries[i].filename, userFile);
-								a.rootDir.entries[i].size = _filesize;
-								a.rootDir.entries[i].firstblock = fb.arr[j];
-							}
-							if(j < fb.cnt-1) {
-								a.fat.f[fb.arr[j]] = fb.arr[j + 1];
-							}
-							else {
-								a.fat.f[fb.arr[j]] = EOF;
-							}
-						}
-
-						// write entire admin struct back to file 
-						FILE* fd = fopen(fileName, "rb+");
-						fwrite(&a, 1, sizeof(admin), fd);
-						fclose(fd);
-
-
-					}
-
-					break;
-				}
-			}
-		}
+	}	
 	return 0;
 }
 
-void printStats(char* fileName)
+void printStats()
 {
-	if (selectedPart == NULL) {
+	if (selectedPart[0] == '\0') {
 		printf("You have to select a Partition with [-partition filename]\n\n");
 	}
 	else {
+		fileName = selectedPart;
 		admin a;
 		FILE* fd = fopen(fileName, "rb");
 		fread(&a, 1, sizeof(admin), fd);
@@ -297,15 +222,12 @@ int writeFileToPartition(admin* a, char* fileName, char* partName, freeBlocks* f
 		int offset = sizeof(admin) + a->b.blocksize * fb->arr[i];
 		fseek(fdPart, offset, SEEK_SET);
 		wCnt = fwrite(buffer, 1, a->b.blocksize, fdPart);
-
 	}
 	free(buffer);
 	fclose(fdUserFile);
 	fclose(fdPart);
 }
 
-
-//////////////////     Üeben     //////////////////
 
 void printMyAdmin(admin a) {
 	printf("\nadmin-bootsection-label : %s", a.b.label);
@@ -324,13 +246,6 @@ void printMenu() {
 	printf("\n-add.....................fügt File hinzu");
 	printf("\n-exit....................beendet Programm\n");
 	printf("==============================================\n");
-	if (selectedPart == NULL) {
-		printf("[NO PARTITION SELECTED]>");
-	}
-	else {
-		printf("[%s]>", selectedPart);
-	}
-	printf("Eingabe: ");
 }
 
 void myHelp() {
@@ -370,6 +285,90 @@ void createPartition(char* myPartition){
 }
 
 
+void selectPartition(char* myPartition) {
+	
+	//printf("Hier\n");
+	FILE* fd = fopen(myPartition, "rb");
+	fread(&a, 1, sizeof(admin), fd);
+	fclose(fd);
+	strcpy(selectedPart, myPartition);
+	//selectedPart = myPartition;
+	numberForCase = 6;
+}
+
+
+void isMyPartSelected() {
+	if (selectedPart[0] == '\0') {
+		printf("[NO PARTITION SELECTED]>");
+	}
+	else {
+		printf("[%s]>", selectedPart);
+	}
+	printf("Eingabe: ");
+}
+
+
+void addThisImage(char* image) {
+
+	char* userFile = image;
+	fileName = selectedPart;
+
+	//printf("userFile: %s\n fileName: %s\n", userFile, fileName);
+
+	dir* d = &(a.rootDir);
+
+	if (fileName == NULL) {
+		printf("\n###Error: no partition specified!");
+		exit(-1);
+	}
+
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (strcmp(d->entries[i].filename, userFile) == 0) {
+			printf("\n###Error: [%s] exists already ... exit now", userFile);
+			exit(-1);
+		}
+	}
+
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (d->entries[i].filename[0] == '\0') {
+			strcpy(&d->entries[i].filename[0], userFile);
+			int _filesize = d->entries[i].size = fileSize(userFile);
+			int bCnt = getNumberOfBlocks(d->entries[i].size, b.blocksize);
+			int _freeBlocks = getNumberOfFreeBlocks(&a);
+			printf("\nadded [%s] to partition [%s] size=[%d] #blocks=[%d] free=[%d]",
+				userFile, fileName, d->entries[i].size, bCnt, _freeBlocks);
+
+			if (bCnt <= _freeBlocks) {
+				freeBlocks fb;
+				getArrayWithFreeBlocks(&a, _filesize, &fb);
+				writeFileToPartition(&a, userFile, fileName, &fb);
+				// write used blocks to FAT
+				printf("\nblocks used: ");
+				for (int j = 0; j < fb.cnt; j++) {
+					printf("%d, ", fb.arr[j]);
+					if (j == 0) {
+						// write filename + filesize + firstblock to root dir
+						strcpy(a.rootDir.entries[i].filename, userFile);
+						a.rootDir.entries[i].size = _filesize;
+						a.rootDir.entries[i].firstblock = fb.arr[j];
+					}
+					if (j < fb.cnt - 1) {
+						a.fat.f[fb.arr[j]] = fb.arr[j + 1];
+					}
+					else {
+						a.fat.f[fb.arr[j]] = EOF;
+					}
+				}
+				// write entire admin struct back to file 
+				FILE* fd = fopen(fileName, "rb+");
+				fwrite(&a, 1, sizeof(admin), fd);
+				fclose(fd);
+			}
+			break;
+		}
+	}
+}
+
 void ls() {
 
 	if (myPartitionCnt == 0) {
@@ -383,85 +382,53 @@ void ls() {
 	}
 }
 
-void selectPartition(char* myPartition) {
+
+void del(char* myInput) {
+
+	char* userFile = myInput;
+	fileName = selectedPart;
+
+	printf("userFile: %s\n", userFile);
+	printf("fileName: %s\n", fileName);
+
+	if (fileName == NULL) {
+		printf("\n###Error: no partition specified!");
+		exit(-1);
+	}
+
+	dir* d = &(a.rootDir);
+
+	int myFirstBlock = 0;
+	int myIndex = 0;
+	int myBlockSize = 0;
+
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (strcmp(d->entries[i].filename, userFile) == 0) {
+			myFirstBlock = d->entries[i].firstblock;
+			myBlockSize = d->entries[i].size;
+			myIndex = i;
+			break;
+		}
+		else {
+			printf("\n###Error:[%s] doesn't exists ... exit now", userFile);
+			exit(-1);
+		}
+	}
+
+	for (int i = myFirstBlock; i == EOF;)
+	{
+		i = a.fat.f[i];
+		a.fat.f[i] = 0;
+	}
 	
-	//printf("Hier\n");
-	FILE* fd = fopen(myPartition, "rb");
-	fread(&a, 1, sizeof(admin), fd);
+	a.fat.f[myFirstBlock] = 0;
+	a.rootDir.entries[myIndex].filename[0] = '\0';
+	a.rootDir.entries[myIndex].firstblock = 0;
+	a.rootDir.entries[myIndex].size = 0;
+
+	FILE* fd = fopen(fileName, "rb+");
+	fwrite(&a, 1, sizeof(admin) + a.b.blocksize * a.b.blockcount, fd);
 	fclose(fd);
-	selectedPart = myPartition;
-	numberForCase = 6;
-}
 
-
-void isMyPartSelected() {
-	if (selectedPart == NULL) {
-		printf("[NO PARTITION SELECTED]>");
-	}
-	else {
-		printf("[%s]>", selectedPart);
-	}
-	printf("Eingabe: ");
-}
-
-
-void addImage(char* image) {
-	
-	if (selectedPart == NULL) {
-		printf("You have to select a partition with [-partition filename]\n");
-	}
-	else {
-		//char* userFile = argv[i + 1];
-
-		dir* d = &(a.rootDir);
-
-		for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
-			if (strcmp(d->entries[i].filename, image) == 0) {
-				printf("\n###Error: [%s] exists already ... exit now", selectedPart);
-				exit(-1);
-			}
-		}
-
-		for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
-			if (d->entries[i].filename[0] == '\0') {
-				strcpy(&d->entries[i].filename[0], image);
-				int _filesize = d->entries[i].size = fileSize(image);
-				int bCnt = getNumberOfBlocks(d->entries[i].size, b.blocksize);
-				int _freeBlocks = getNumberOfFreeBlocks(&a);
-				printf("\nadded [%s] to partition [%s] size=[%d] #blocks=[%d] free=[%d]",
-					image, selectedPart, d->entries[i].size, bCnt, _freeBlocks);
-
-				if (bCnt <= _freeBlocks) {
-					freeBlocks fb;
-					getArrayWithFreeBlocks(&a, _filesize, &fb);
-					writeFileToPartition(&a, image, selectedPart, &fb);
-					// write used blocks to FAT
-					printf("\nblocks used: ");
-					for (int j = 0; j < fb.cnt; j++) {
-						printf("%d, ", fb.arr[j]);
-						if (j == 0) {
-							// write filename + filesize + firstblock to root dir
-							strcpy(a.rootDir.entries[i].filename, image);
-							a.rootDir.entries[i].size = _filesize;
-							a.rootDir.entries[i].firstblock = fb.arr[j];
-						}
-						if (j < fb.cnt - 1) {
-							a.fat.f[fb.arr[j]] = fb.arr[j + 1];
-						}
-						else {
-							a.fat.f[fb.arr[j]] = EOF;
-						}
-					}
-
-					// write entire admin struct back to file 
-					FILE* fd = fopen(selectedPart, "rb+");
-					fwrite(&a, 1, sizeof(admin), fd);
-					fclose(fd);
-				}
-				break;
-			}
-		}
-	}
-
-	
+	printf("Hier\n");
 }

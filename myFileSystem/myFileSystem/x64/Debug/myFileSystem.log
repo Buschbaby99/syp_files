@@ -1,37 +1,42 @@
 ﻿  Main.c
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(39,9): warning C4013: "gets" undefiniert; Annahme: extern mit Rückgabetyp int
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(49,21): warning C4047: "=": Anzahl der Dereferenzierungen bei "char **" und "char *" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(54,20): warning C4047: "=": Anzahl der Dereferenzierungen bei "char **" und "char *" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(63,32): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(63,24): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(64,39): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(64,31): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(65,42): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(65,34): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(66,38): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(66,30): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(67,36): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(67,28): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(68,37): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(68,29): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(69,33): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(69,25): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(70,35): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(70,27): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(34,9): warning C4013: "gets" undefiniert; Annahme: extern mit Rückgabetyp int
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(43,21): warning C4047: "=": Anzahl der Dereferenzierungen bei "char **" und "char *" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(48,20): warning C4047: "=": Anzahl der Dereferenzierungen bei "char **" und "char *" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(57,32): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(57,24): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(58,39): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(58,31): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(59,42): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(59,34): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(60,38): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(60,30): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(61,36): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(61,28): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(62,37): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(62,29): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(63,33): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(63,25): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(64,35): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(64,27): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(65,36): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "const char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(65,28): warning C4024: "strcmp": unterschiedliche Typen für formalen und übergebenen Parameter 2
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(74,28): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(74,21): warning C4024: "createPartition": unterschiedliche Typen für formalen und übergebenen Parameter 1
 C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(78,28): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(78,21): warning C4024: "createPartition": unterschiedliche Typen für formalen und übergebenen Parameter 1
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(82,28): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(82,21): warning C4024: "selectPartition": unterschiedliche Typen für formalen und übergebenen Parameter 1
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(86,23): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(86,16): warning C4024: "printStats": unterschiedliche Typen für formalen und übergebenen Parameter 1
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(90,5): warning C4013: "addImage" undefiniert; Annahme: extern mit Rückgabetyp int
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(34,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(35,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(279,19): warning C4047: "return": Anzahl der Dereferenzierungen bei "int" und "int *" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(296,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(299,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(315,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "direntry *" auf.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(315,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „direntry *“ in Konflikt.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(316,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "int *" auf.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(316,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „int *“ in Konflikt.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(408,6): error C2371: "addImage": Neudefinition; unterschiedliche Basistypen
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(78,21): warning C4024: "selectPartition": unterschiedliche Typen für formalen und übergebenen Parameter 1
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(87,25): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(87,18): warning C4024: "addThisImage": unterschiedliche Typen für formalen und übergebenen Parameter 1
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(104,16): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char *" und "char **" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(104,9): warning C4024: "del": unterschiedliche Typen für formalen und übergebenen Parameter 1
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(104,18): warning C4020: "del": zu viele übergebene Parameter
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(29,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(30,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(204,19): warning C4047: "return": Anzahl der Dereferenzierungen bei "int" und "int *" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(221,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(224,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(237,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "direntry *" auf.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(237,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „direntry *“ in Konflikt.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(238,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "int *" auf.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(238,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „int *“ in Konflikt.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(229): warning C4716: "writeFileToPartition": Muss einen Wert zurückgeben
+  myFileSystem.vcxproj -> C:\HTL_3\SYP\myFileSystem\x64\Debug\myFileSystem.exe
