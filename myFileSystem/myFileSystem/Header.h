@@ -74,3 +74,8 @@ void addThisImage(char* image);
 
 void printStats();
 void del(char* myInput);
+
+void boot(char * ptr[]);
+
+
+int arg_passer(char* ptr[]);

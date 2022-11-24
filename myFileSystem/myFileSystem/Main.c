@@ -9,7 +9,6 @@
 
 bootsector b = { "3AKIFT", DEFAULT_BLOCKSIZE, MAX_BLOCK_COUNT };
 admin a = { 0 };
-//subDir sub = { 0 };
 
 int numberForCase = 6;
 
@@ -26,56 +25,81 @@ int main(int argc, char** argv) {
 
 	char str[50];
 	myHelp();
+	
 	char** myInput = ' ';
 	char** myBefehl = ' ';
+	char** third_arg = ' ';
+	char* myPointerArray[3];
+	
+	
+	/*
+	char myInput[20];
+	char myBefehl[20];
+	char third_arg[20];
+	*/
 
 	isMyPartSelected();
 	
 	while (gets(str)) {
 		
-		const char s[2];
+		int cnt = arg_passer(myPointerArray, str);
+
+		//exit(1);
+		/*
+		const char s[] = " ";
 		char* token;
-		token = strtok(str, " ");
+		token = strtok(str, s);
 
 		int cnt = 0;
+		
+		
 		while (token != NULL) {
 			if (cnt == 0) {
 				myBefehl = token;
 				token = strtok(NULL, s);
 				cnt++;
 			}
-			else if(cnt == 1) {
+			else if (cnt == 1) {
 				myInput = token;
+				token = strtok(NULL, s);
+				cnt++;
+			}
+			else if (cnt == 2) {
+				third_arg = token;
 				token = strtok(NULL, s);
 			}
 		}
+		*/
 		
+
 		if (cnt == 0) {
 			numberForCase = 6;
 		}
 		else {
-			if (strcmp("-help", myBefehl) == 0) { numberForCase = 0; }
-			else if (strcmp("-create", myBefehl) == 0) { numberForCase = 1; }
-			else if (strcmp("-partition", myBefehl) == 0) { numberForCase = 2; }
-			else if (strcmp("-stats", myBefehl) == 0) { numberForCase = 3; }
-			else if (strcmp("-add", myBefehl) == 0) { numberForCase = 4; }
-			else if (strcmp("-exit", myBefehl) == 0) { numberForCase = 5; }
-			else if (strcmp(" ", myBefehl) == 0) { numberForCase = 6; }
-			else if (strcmp("-ls", myBefehl) == 0) { numberForCase = 8; }
-			else if (strcmp("-del", myBefehl) == 0) { numberForCase = 9; }
+			if (strcmp("-help", myPointerArray[0]) == 0) { numberForCase = 0; }
+			else if (strcmp("-create", myPointerArray[0]) == 0) { numberForCase = 1; }
+			else if (strcmp("-partition", myPointerArray[0]) == 0) { numberForCase = 2; }
+			else if (strcmp("-stats", myPointerArray[0]) == 0) { numberForCase = 3; }
+			else if (strcmp("-add", myPointerArray[0]) == 0) { numberForCase = 4; }
+			else if (strcmp("-exit", myPointerArray[0]) == 0) { numberForCase = 5; }
+			else if (strcmp(" ", myPointerArray[0]) == 0) { numberForCase = 6; }
+			else if (strcmp("-ls", myPointerArray[0]) == 0) { numberForCase = 8; }
+			else if (strcmp("-del", myPointerArray[0]) == 0) { numberForCase = 9; }
+			else if (strcmp("-boot", myPointerArray[0]) == 0) { numberForCase = 10; }
 			else { numberForCase = 7; }
 		}
 
+		//exit(1);
 		switch (numberForCase) {
 			case 0: printMenu();
 				isMyPartSelected();
 				break;
 			case 1: 
-				createPartition(myInput);
+				createPartition(myPointerArray[1]);
 				isMyPartSelected();
 					break;
 			case 2: 
-				selectPartition(myInput);
+				selectPartition(myPointerArray[1]);
 				isMyPartSelected();
 				break;
 			case 3: 
@@ -84,7 +108,7 @@ int main(int argc, char** argv) {
 				isMyPartSelected();
 				break;
 			case 4: 
-				addThisImage(myInput);
+				addThisImage(myPointerArray[1]);
 				printf("\n\n");
 				isMyPartSelected();
 				break;
@@ -101,8 +125,12 @@ int main(int argc, char** argv) {
 				isMyPartSelected();
 				break;
 			case 9:
-				del(myInput, a);
+				del(myPointerArray[1], a);
 				isMyPartSelected();
+				break;
+			case 10:
+				boot(myPointerArray[1], myPointerArray[2]);
+				//isMyPartSelected();
 				break;
 			default: 
 				printf("Wronge Input maybe try [-help] for info\n\n"); 
@@ -196,6 +224,7 @@ int getArrayWithFreeBlocks(admin* a, int filesize, freeBlocks* fb) {
 		if (a->fat.f[i] == '\0') {
 			blockArray[j++] = i;
 		}
+		//last EOF
 		if (j >= _blockCount) {
 			break;
 		}
@@ -284,18 +313,14 @@ void createPartition(char* myPartition){
 		numberForCase = 6;
 }
 
-
 void selectPartition(char* myPartition) {
 	
-	//printf("Hier\n");
 	FILE* fd = fopen(myPartition, "rb");
 	fread(&a, 1, sizeof(admin), fd);
 	fclose(fd);
 	strcpy(selectedPart, myPartition);
-	//selectedPart = myPartition;
 	numberForCase = 6;
 }
-
 
 void isMyPartSelected() {
 	if (selectedPart[0] == '\0') {
@@ -388,8 +413,8 @@ void del(char* myInput) {
 	char* userFile = myInput;
 	fileName = selectedPart;
 
-	printf("userFile: %s\n", userFile);
-	printf("fileName: %s\n", fileName);
+	//printf("userFile: %s\n", userFile);
+	//printf("fileName: %s\n", fileName);
 
 	if (fileName == NULL) {
 		printf("\n###Error: no partition specified!");
@@ -414,9 +439,10 @@ void del(char* myInput) {
 			exit(-1);
 		}
 	}
+	
+	int i = myFirstBlock;
 
-	for (int i = myFirstBlock; i == EOF;)
-	{
+	while (i != EOF) {
 		i = a.fat.f[i];
 		a.fat.f[i] = 0;
 	}
@@ -430,5 +456,37 @@ void del(char* myInput) {
 	fwrite(&a, 1, sizeof(admin) + a.b.blocksize * a.b.blockcount, fd);
 	fclose(fd);
 
-	printf("Hier\n");
+	printf("[%s] wurde gelöscht!\n", userFile);
+}
+
+int arg_passer(char* ptr[], char* str) {
+
+	const char s[] = " ";
+	char* token;
+	token = strtok(str, s);
+
+	int cnt = 0;
+
+	while (token != NULL){
+		ptr[cnt] = token;
+		token = strtok(NULL, s);
+		cnt++;
+	}
+
+	for (int i = 0; i < cnt; i++) {
+		printf("%s\n", ptr[i]);
+	}
+
+	return cnt;
+}
+
+
+void boot(char* ptr[]) {
+
+	admin a;
+	FILE* fd = fopen(selectedPart, "rb");
+	fread(&a, 1, sizeof(admin), fd);
+
+	printf("Hallo: %s\n", (a.rootDir.entries[0].filename));
+
 }
