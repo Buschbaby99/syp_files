@@ -30,13 +30,6 @@ int main(int argc, char** argv) {
 	char** myBefehl = ' ';
 	char** third_arg = ' ';
 	char* myPointerArray[3];
-	
-	
-	/*
-	char myInput[20];
-	char myBefehl[20];
-	char third_arg[20];
-	*/
 
 	isMyPartSelected();
 	
@@ -85,7 +78,7 @@ int main(int argc, char** argv) {
 			else if (strcmp(" ", myPointerArray[0]) == 0) { numberForCase = 6; }
 			else if (strcmp("-ls", myPointerArray[0]) == 0) { numberForCase = 8; }
 			else if (strcmp("-del", myPointerArray[0]) == 0) { numberForCase = 9; }
-			else if (strcmp("-boot", myPointerArray[0]) == 0) { numberForCase = 10; }
+			else if (strcmp("-put", myPointerArray[0]) == 0) { numberForCase = 10; }
 			else { numberForCase = 7; }
 		}
 
@@ -125,12 +118,12 @@ int main(int argc, char** argv) {
 				isMyPartSelected();
 				break;
 			case 9:
-				del(myPointerArray[1], a);
+				del(myPointerArray, a);
 				isMyPartSelected();
 				break;
 			case 10:
-				boot(myPointerArray[1], myPointerArray[2]);
-				//isMyPartSelected();
+				put(myPointerArray);
+				isMyPartSelected();
 				break;
 			default: 
 				printf("Wronge Input maybe try [-help] for info\n\n"); 
@@ -138,7 +131,7 @@ int main(int argc, char** argv) {
 				isMyPartSelected();
 				break;
 		}
-	}	
+	}
 	return 0;
 }
 
@@ -283,9 +276,7 @@ void myHelp() {
 	printf("*  -help...........aufruf der Funktionen     *\n");
 	printf("*                                            *\n");
 	printf("==============================================\n");
-	//printf("Eingabe: ");
 }
-
 
 void createPartition(char* myPartition){
 		
@@ -381,7 +372,7 @@ void addThisImage(char* image) {
 						a.fat.f[fb.arr[j]] = fb.arr[j + 1];
 					}
 					else {
-						a.fat.f[fb.arr[j]] = EOF;
+					a.fat.f[fb.arr[j]] = EOF;
 					}
 				}
 				// write entire admin struct back to file 
@@ -408,9 +399,12 @@ void ls() {
 }
 
 
-void del(char* myInput) {
+void del(char* ptr[]) {
 
-	char* userFile = myInput;
+	//int a;
+	//a = used_Blocks_Array(myPartArr)
+
+	char* userFile = ptr[1];
 	fileName = selectedPart;
 
 	//printf("userFile: %s\n", userFile);
@@ -420,6 +414,55 @@ void del(char* myInput) {
 		printf("\n###Error: no partition specified!");
 		exit(-1);
 	}
+
+	int firstBlock;
+	int size;
+	int myIndex;
+
+	
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (strcmp(a.rootDir.entries[i].filename, ptr[1]) == 0) {
+			firstBlock = a.rootDir.entries[i].firstblock;
+			size = getNumberOfBlocks(a.rootDir.entries[i].size, a.b.blocksize);
+			myIndex = i;
+			break;
+		}
+	}
+
+	size += 2;
+	int* myArr = malloc(size * sizeof(int));
+	myArr = used_Blocks_Array(ptr);
+
+
+
+
+	int i = 1;
+	/*
+	while (i < size) {
+		printf("i: [%d] => [%d]", i, myArr[i]);
+		i++;
+	}
+	*/
+
+	while (i < size-1) {
+		a.fat.f[myArr[i]] = 0;
+		i++;
+	}
+
+	//a.fat.f[firstBlock] = 0;
+	//TODO all chars del
+	a.rootDir.entries[myIndex].filename[0] = '\0';
+	a.rootDir.entries[myIndex].firstblock = 0;
+	a.rootDir.entries[myIndex].size = 0;
+
+
+	FILE* fd = fopen(fileName, "rb+");
+	fwrite(&a, 1, sizeof(admin) + a.b.blocksize * a.b.blockcount, fd);
+	fclose(fd);
+
+	printf("[%s] wurde gelöscht!\n", userFile);
+
+	/*
 
 	dir* d = &(a.rootDir);
 
@@ -442,10 +485,15 @@ void del(char* myInput) {
 	
 	int i = myFirstBlock;
 
+	//int cnt = 0;
 	while (i != EOF) {
+		//for wrong
 		i = a.fat.f[i];
 		a.fat.f[i] = 0;
 	}
+
+	*/
+	/*
 	
 	a.fat.f[myFirstBlock] = 0;
 	a.rootDir.entries[myIndex].filename[0] = '\0';
@@ -457,6 +505,8 @@ void del(char* myInput) {
 	fclose(fd);
 
 	printf("[%s] wurde gelöscht!\n", userFile);
+	*/
+	free(myArr);
 }
 
 int arg_passer(char* ptr[], char* str) {
@@ -473,20 +523,139 @@ int arg_passer(char* ptr[], char* str) {
 		cnt++;
 	}
 
+	/*
 	for (int i = 0; i < cnt; i++) {
 		printf("%s\n", ptr[i]);
 	}
+	*/
 
 	return cnt;
 }
 
 
-void boot(char* ptr[]) {
+void put(char* ptr[]) {
+
+	fileName = selectedPart;
+
+	//printf("%s\n", userFile);
+	//printf("%s\n", fileName);
+
+	if (fileName == NULL) {
+		printf("\n###Error: no partition specified!");
+		exit(-1);
+	}
+
+	int firstBlock;
+	int size;
+	int myIndex;
+
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (strcmp(a.rootDir.entries[i].filename, ptr[1]) == 0) {
+			firstBlock = a.rootDir.entries[i].firstblock;
+			size = getNumberOfBlocks(a.rootDir.entries[i].size, a.b.blocksize);
+			myIndex = i;
+			break;
+		}
+	}
+
+	size += 2;
+
+	int* myArr = malloc(size * sizeof(int));
+
+	myArr = used_Blocks_Array(ptr);
+
+	
+	
+
+	unsigned char* buffer = malloc(a.b.blocksize);
+
+	int i = 1;
+	FILE* myPart = fopen(selectedPart, "rb");
+	FILE* myImage = fopen(ptr[2], "wb");
+	int myCnt = 0;
+	
+	while (i < size - 1) {
+		
+		if (myCnt == 0);
+		int offet = sizeof(admin) + a.b.blocksize * myArr[i];
+		fseek(myPart, offet, SEEK_SET);
+		
+		fread(buffer, a.b.blocksize, 1, myPart);
+		fwrite(buffer, a.b.blocksize, 1, myImage);
+		
+		i++;
+	}
+	fclose(myImage);
+	fclose(myPart);
+	free(buffer);
+	free(myArr);
+}
+
+
+int* used_Blocks_Array(char* ptr[]) {
 
 	admin a;
 	FILE* fd = fopen(selectedPart, "rb");
 	fread(&a, 1, sizeof(admin), fd);
 
-	printf("Hallo: %s\n", (a.rootDir.entries[0].filename));
+	int firstBlock;
+	int size;
 
+	for (int i = 0; i < MAX_DIR_ENTRIES; i++) {
+		if (strcmp(a.rootDir.entries[i].filename, ptr[1]) == 0) {
+			firstBlock = a.rootDir.entries[i].firstblock;
+			size = getNumberOfBlocks(a.rootDir.entries[i].size, a.b.blocksize);
+			break;
+		}
+	}
+	
+	int i = firstBlock;
+	int j = 0;
+
+	int* sizeForArray;
+
+	size += 2;
+
+	sizeForArray = malloc(size * sizeof(int));
+	if (sizeForArray == NULL) {
+		printf("Error bei malloc\n");
+		exit(-1);
+	}
+
+	int myCounter = 0;
+
+	while (i != EOF) {
+
+		if (myCounter == 0) {
+			sizeForArray[j] = size;
+			myCounter++;
+			j++;
+		}
+		else if (myCounter == 1) {
+			sizeForArray[j] = firstBlock;
+			myCounter++;
+			j++;
+		}
+		else {
+			sizeForArray[j] = a.fat.f[i];
+			i = a.fat.f[i];
+			j++;
+		}
+	}
+
+	for (int i = 0; i < size; i++) {
+		printf("%d\n", sizeForArray[i]);
+	}
+
+	//i = 0;
+
+	/*
+	while (i < size) {
+		printf("i: [%d] => [%d]", i, sizeForArray[i]);
+		i++;
+	}
+	*/
+	
+	//free(sizeForArray);
+	return sizeForArray;
 }

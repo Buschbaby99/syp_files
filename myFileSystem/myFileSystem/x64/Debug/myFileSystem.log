@@ -1,20 +1,17 @@
 ﻿  Main.c
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(43,9): warning C4013: "gets" undefiniert; Annahme: extern mit Rückgabetyp int
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(45,40): warning C4020: "arg_passer": zu viele übergebene Parameter
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(128,28): warning C4020: "del": zu viele übergebene Parameter
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(132,27): warning C4047: "Funktion": Anzahl der Dereferenzierungen bei "char **" und "char *" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(132,24): warning C4024: "boot": unterschiedliche Typen für formalen und übergebenen Parameter 1
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(132,43): warning C4020: "boot": zu viele übergebene Parameter
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(36,9): warning C4013: "gets" undefiniert; Annahme: extern mit Rückgabetyp int
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(38,40): warning C4020: "arg_passer": zu viele übergebene Parameter
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(121,25): warning C4020: "del": zu viele übergebene Parameter
 C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(29,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
 C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(30,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
 C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(31,1): warning C4047: "Initialisierung": Anzahl der Dereferenzierungen bei "char **" und "int" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(233,19): warning C4047: "return": Anzahl der Dereferenzierungen bei "int" und "int *" unterschiedlich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(250,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(253,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(266,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "direntry *" auf.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(266,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „direntry *“ in Konflikt.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(267,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "int *" auf.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(267,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „int *“ in Konflikt.
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(462,40): warning C4029: Deklarierte Liste formaler Parameter weicht von der Definition ab
-C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(258): warning C4716: "writeFileToPartition": Muss einen Wert zurückgeben
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(226,19): warning C4047: "return": Anzahl der Dereferenzierungen bei "int" und "int *" unterschiedlich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(243,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(246,10): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(259,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "direntry *" auf.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(259,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „direntry *“ in Konflikt.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(260,9): warning C4477: "printf": Die Formatzeichenfolge "%d" erfordert ein Argument vom Typ "int", das variadic-Argument "1" weist aber den Typ "int *" auf.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(260,9): warning C4313: „printf“: „%d“ in der Formatzeichenfolge steht mit dem Argument 1 vom Typ „int *“ in Konflikt.
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(512,40): warning C4029: Deklarierte Liste formaler Parameter weicht von der Definition ab
+C:\HTL_3\SYP\myFileSystem\myFileSystem\Main.c(251): warning C4716: "writeFileToPartition": Muss einen Wert zurückgeben
   myFileSystem.vcxproj -> C:\HTL_3\SYP\myFileSystem\x64\Debug\myFileSystem.exe

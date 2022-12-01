@@ -73,9 +73,10 @@ void isMyPartSelected();
 void addThisImage(char* image);
 
 void printStats();
-void del(char* myInput);
+void del(char* ptr[]);
 
-void boot(char * ptr[]);
+void put(char* ptr[]);
 
 
 int arg_passer(char* ptr[]);
+int* used_Blocks_Array(char* ptr[]);
